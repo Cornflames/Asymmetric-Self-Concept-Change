@@ -1,0 +1,61 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: 'Explaining Asymmetric Self-Concept Change: A Formal Model'
+message: >-
+  If you refer to this model, please make it clear that it
+  is based solely on our interpretation and formalisation of
+  Brotzeller and Gollwitzer's (2025) theory. It has not been
+  authorised by the authors, who may have had a different
+  model or formalisation in mind. Please note that this
+  model forms part of an bachelor thesis in psychology which
+  has not yet been graded.
+type: software
+authors:
+  - given-names: Benedikt Daniel
+    family-names: Ehrenwirth
+    email: benehrenwirth@gmail.com
+  - {}
+repository-code: >-
+  https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git
+abstract: >-
+  This project contains code that tests whether a formal
+  model derived from our formalisation of Brotzeller and
+  Gollwitzer's (2025) theory can produce a statistical
+  pattern representing the following phenomenon. The
+  perceived opportunity for improvement (OFI) moderates the
+  effect of direction of discrepancy (between
+  self-perception and feedback) on subsequent self-concept
+  change, such that a low OFI is associated with a
+  positivity bias and a high OFI with a negativity bias in
+  self-concept change. This model demonstrates that the
+  formalised theory can be reduced to a formal model that
+  produces biases in different directions as a direct
+  consequence of low or high OFI values, omitting the
+  mediating processes that are meant to explain why a low
+  OFI leads to a positivity bias and a high OFI leads to a
+  negativity bias. We argue that the explanatory power of
+  the theory is therefore weak; the formal model can
+  produce the statistical pattern, but only because it
+  directly models the phenomenon.
+keywords:
+  - modeling
+  - theory
+  - formalisation
+  - formal theory
+  - formal model
+license: MIT
+references:
+  - authors:
+      - family-names: Brotzeller
+        given-names: Franziska
+      - family-names: Gollwitzer
+        given-names: Mario
+    title: "Exploring Asymmetries in Self-Concept Change After Discrepant Feedback."
+    journal: "Personality and Social Psychology Bulletin"
+    volume: 51
+    issue: 9
+    year: 2025
+    doi: 10.1177/01461672241232738
+    type: article
