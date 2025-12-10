@@ -32,7 +32,7 @@ Laden des von den Autoren bereitgestellten Datensatzes.
 # Eine Inspektion der textualen Darstellung der CSV-Datei zeigt,
 # dass die Felder mit einem Semikolon getrennt sind, weswegen 
 # read.csv2 statt read.csv verwendet wird.
-original_data <- read.csv2("./CleanData_S4_final.csv")
+original_data <- read.csv2("../data/CleanData_S4_final.csv")
 ```
 
 ## Ausschluss von Versuchspersonen
