@@ -1,20 +1,20 @@
 1. Einleitung
 2. Untersuchung der theoretischen Fundierung
-2.1 Grundannahmen
-2.2 Ein allgemeines Erklärungsgesetz
-2.3 Anschlussfragen
-2.4 Ein subjektiver Schwellenwert für die Wahrnehmung von Verbesserungsmöglichkeiten
-2.5 Die Evaluationsmotive als logische Folgen niedriger und hoher Verbesserungsmöglichkeiten
-2.6 Der Positivbias und der Negativbias als logische Folgen der Evaluationsmotive
+    2.1 Grundannahmen
+    2.2 Ein allgemeines Erklärungsgesetz
+    2.3 Anschlussfragen
+    2.4 Ein subjektiver Schwellenwert für die Wahrnehmung von Verbesserungsmöglichkeiten
+    2.5 Die Evaluationsmotive als logische Folgen niedriger und hoher Verbesserungsmöglichkeiten
+    2.6 Der Positivbias und der Negativbias als logische Folgen der Evaluationsmotive
 3. Reproduktion von Studie 4
-3.1 Umfang der Reproduktion und Weiterverarbeitung der Primärdaten
-3.2 Implementierung und Durchführung der Berechnung
-3.3 Vergleich der Ergebnisse
-3.4 Neubewertung der Schlussfolgerungen
+    3.1 Umfang der Reproduktion und Weiterverarbeitung der Primärdaten
+    3.2 Implementierung und Durchführung der Berechnung
+    3.3 Vergleich der Ergebnisse
+    3.4 Neubewertung der Schlussfolgerungen
 4. Diskussion: Weitere Kritikpunkte und Anmerkungen
-4.1 Ein kontinuierliches Alternativmodell
-4.2 Falsifizierbarkeit der Theorie durch gezielte Messung
-4.3 Das Verhältnis zwischen subjektiven Schwellenwerten und einem durchschnittlichen Schwellenwert wahrgenommener Verbesserungsmöglichkeiten
+    4.1 Ein kontinuierliches Alternativmodell
+    4.2 Falsifizierbarkeit der Theorie durch gezielte Messung
+    4.3 Das Verhältnis zwischen subjektiven Schwellenwerten und einem durchschnittlichen Schwellenwert wahrgenommener Verbesserungsmöglichkeiten
 (5. Schlussbemerkungen)
 Appendix A - Annahmentabelle
 Appendix B - Kohärenztabelle

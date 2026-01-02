@@ -1,0 +1,67 @@
+\documentclass[stu,12pt,floatsintext]{apa7}
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage[babel,german=quotes]{csquotes} 
+\usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber,language=german]{biblatex}
+\addbibresource{{./references/bibliography.bib}}
+\DeclareLanguageMapping{german}{german-apa}
+\usepackage{mathptmx}
+
+
+
+
+%%% --- Von No eingebundene Pakete
+
+% Laden verschiedener Pakete für Querverweise
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage[ngerman]{cleveref}
+
+% Deutsche Aliase für Tabellen
+\crefname{table}{Tabelle}{Tabellen}
+\Crefname{table}{Tabelle}{Tabellen}
+
+% Grafiken und Tabellen
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{longtable}
+% \UseTblrLibrary{booktabs}
+
+% Laden des XColor-Pakets
+\usepackage[table]{xcolor}
+
+\title{Asymmetric Self Concept Change} % The big, long version of the title for the title page
+\shorttitle{Asymmetric Self Concept Change} % The short title for the header
+\author{Benedikt Daniel Ehrenwirth}
+\duedate{13. Januar 2026}
+% \date{January 17, 2024} The student version doesn't use the \date command, for whatever reason
+\authorsaffiliations{Ludwig-Maximilians-Universität}
+\course{Bachelorarbeit} % LaTeX gets annoyed (i.e., throws a grumble-error) if this is blank, so I put something here. However, if your instructor will mark you off for this being on the title page, you can leave this entry blank (delete the PSY 4321, but leave the command), and just make peace with the error that will happen. It won't break the document.
+\professor{Dr. Professor}  % Same situation as for the course info. Some instructors want this, some absolutely don't and will take off points. So do what you gotta.
+
+\abstract{This is the abstract for this paper, wherein the main points of the introduction, method, results, and discussion are quickly talked about. Probably in more than one sentence, though. Dare I guess, more than two? There is a page break before starting the Introduction.}
+
+\begin{document}
+    \maketitle
+
+    \tableofcontents
+    \clearpage
+    \listoffigures
+    \clearpage
+    \listoftables
+
+    % Kapitel
+    \include{report/chapters/010 Einleitung}
+    \include{report/chapters/020 Untersuchung der theoretischen Fundierung}
+    \include{report/chapters/030 Reproduktion von Studie 4}
+    \include{report/chapters/040 Diskussion: Weitere Kritikpunkte und Anmerkungen}
+    \include{report/chapters/050 Schlussbemerkungen}
+
+    % Literaturverzeichnis
+    \printbibliography
+\end{document}
