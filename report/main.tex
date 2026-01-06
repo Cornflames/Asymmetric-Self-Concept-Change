@@ -6,7 +6,7 @@
 
 \usepackage[babel,german=quotes]{csquotes} 
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber,language=german]{biblatex}
-\addbibresource{{./references/bibliography.bib}}
+\addbibresource{report/references/bibliography.bib}
 \DeclareLanguageMapping{german}{german-apa}
 \usepackage{mathptmx}
 
@@ -15,6 +15,18 @@
 
 %%% --- Von No eingebundene Pakete
 
+
+% Grafiken und Tabellen
+\usepackage{pdflscape}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{longtable}
+% \UseTblrLibrary{booktabs}
 % Laden verschiedener Pakete für Querverweise
 \usepackage{varioref}
 \usepackage{hyperref}
@@ -24,16 +36,9 @@
 \crefname{table}{Tabelle}{Tabellen}
 \Crefname{table}{Tabelle}{Tabellen}
 
-% Grafiken und Tabellen
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{multirow}
-\usepackage{longtable}
-% \UseTblrLibrary{booktabs}
-
 % Laden des XColor-Pakets
 \usepackage[table]{xcolor}
+\newcommand{\td}{\textcolor{red}{\textbf{???}}{ }}
 
 \title{Asymmetric Self Concept Change} % The big, long version of the title for the title page
 \shorttitle{Asymmetric Self Concept Change} % The short title for the header
@@ -64,4 +69,8 @@
 
     % Literaturverzeichnis
     \printbibliography
+
+    \appendix
+
+    \include{report/appendices/annahmetabelle}
 \end{document}
