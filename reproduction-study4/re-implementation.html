@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Appendix B</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="re-implementation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="re-implementation_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="re-implementation_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="re-implementation_files/libs/quarto-html/popper.min.js"></script>
+<script src="re-implementation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="re-implementation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="re-implementation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="re-implementation_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="re-implementation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="re-implementation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="re-implementation_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-defining-the-scope" id="toc-a-defining-the-scope" class="nav-link active" data-scroll-target="#a-defining-the-scope">(a) Defining the Scope</a></li>
+  <li><a href="#b-checking-the-preconditions" id="toc-b-checking-the-preconditions" class="nav-link" data-scroll-target="#b-checking-the-preconditions">(b) Checking the Preconditions</a></li>
+  <li><a href="#c-obtaining-results" id="toc-c-obtaining-results" class="nav-link" data-scroll-target="#c-obtaining-results">(c) Obtaining results</a>
+  <ul class="collapse">
+  <li><a href="#applying-exclusion-criteria" id="toc-applying-exclusion-criteria" class="nav-link" data-scroll-target="#applying-exclusion-criteria">Applying exclusion criteria</a></li>
+  <li><a href="#data-pre-processing" id="toc-data-pre-processing" class="nav-link" data-scroll-target="#data-pre-processing">Data Pre-Processing</a></li>
+  <li><a href="#regression-analysis" id="toc-regression-analysis" class="nav-link" data-scroll-target="#regression-analysis">Regression analysis</a></li>
+  </ul></li>
+  <li><a href="#d-evaluating-the-consistency-of-results" id="toc-d-evaluating-the-consistency-of-results" class="nav-link" data-scroll-target="#d-evaluating-the-consistency-of-results">(d) Evaluating the Consistency of Results</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="re-implementation.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Appendix B</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In dieser Datei wird eine vollständige Re-Implementation Reproduction von Studie 4 in Brotzeller &amp; Gollwitzer (2025) nach den Schritten durchgeführt, die das <em>Conceptual Framework for Computational Reproductions</em> (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei findet sich in den <a href="https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git">Zusatzmaterialien</a> der vorliegenden Bachelorarbeit.</p>
+<section id="a-defining-the-scope" class="level2">
+<h2 class="anchored" data-anchor-id="a-defining-the-scope">(a) Defining the Scope</h2>
+<ul>
+<li><strong>Works</strong>: Studie 4 aus Brotzeller &amp; Gollwitzer (2025)</li>
+<li><strong>Claims</strong>:
+<ul>
+<li>H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)</li>
+<li>H2 widerlegt: Die wahrgenommenen Verbesserungsmöglichkeiten ziehen keine Asymmetrien in den Selbstkonzeptänderungen nach sich (S. 1739)</li>
+</ul></li>
+<li><strong>Results</strong>: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren <code>size of discrepancy (SoD)</code>, <code>direction of discrepancy (DoD)</code> und <code>opportunity for improvement (OFI)</code> sowie all ihren Interaktionseffekten ab. Das Modell sagt die absoluten Selbstkonzeptänderungen vorher.</li>
+<li><strong>Obtained data</strong>: Anonymisierte Primärdaten, die <a href="https://osf.io/yadqw">hier</a> aus dem OSF abrufbar sind.
+<ul>
+<li>Die Primärdaten wurden schon so weit vorverarbeitet, dass Prädiktorvariablen des Regressionmodells bereits aus anderen Variablen im Datensatz berechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.</li>
+<li>Der Datensatz enthält noch alle Versuchspersonen, die Brotzeller &amp; Gollwitzer (2025) aus der finalen Analyse ausschließen. Die Anwendung der präregistrierten Ausschlusskriterien kann und wird deshalb wiederholt werden.</li>
+</ul></li>
+<li><strong>Involved descriptions</strong>: Die Beschreibungen aus den folgenden Quellen werden miteinbezogen und auf etwaige Inkohärenzen überprüft:
+<ul>
+<li>Beschreibungen der Hypothesen, der Methoden, des Vorgehens und der Ergebnisse von Studie 4 im Artikel (S. 1738-1739)</li>
+<li>Beschreibungen der Schlussfolgerungen aus den Ergebnissen von Studie 4 in der Diskussion (S. 1740)</li>
+<li>Beschreibungen der Hypothesen, der geplanten Berechnung sowie der Ausschlusskriterien in der <a href="https://aspredicted.org/rr4r7.pdf">Präregistierung</a></li>
+<li>Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im Codebook</li>
+<li>Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den Materialien zu Studie 4 zurückgegriffen werden</li>
+</ul></li>
+<li><strong>Inherited source code</strong>: Der Quellcode für die Berechnung wird re-implementiert. Es wird nur dann auf Teile des <a href="https://osf.io/yadqw">Quellcodes der Autoren</a> zurückgegriffen, wenn eine offene Frage bei der Implementierung nicht eigenständig geklärt werden kann.</li>
+</ul>
+</section>
+<section id="b-checking-the-preconditions" class="level2">
+<h2 class="anchored" data-anchor-id="b-checking-the-preconditions">(b) Checking the Preconditions</h2>
+<ul>
+<li>Die anonymisierten <a href="https://osf.io/yadqw">Primärdaten</a> konnten abgerufen und eingebunden werden:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>original_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"../data/CleanData_S4_final.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Die Autoren führen ihre Berechnung in R (R Core Team, 2018) durch. Für die Reproduktion wird die folgende R-Umgebung verwendet:</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.5.2 (2025-10-31 ucrt)
+x86_64-w64-mingw32/x64
+Windows 11 x64 (build 26200)</code></pre>
+</div>
+</div>
+<ul>
+<li>Die benötigten R-Pakete konnten installiert und eingebunden werden:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>dplyr version 1.1.4
+apaTables version 2.0.8</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fazit: Die Reproduktion kann durchgeführt werden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Alle Voraussetzungen für die Durchführung der Reproduktion sind erfüllt.</p>
+</div>
+</div>
+</section>
+<section id="c-obtaining-results" class="level2">
+<h2 class="anchored" data-anchor-id="c-obtaining-results">(c) Obtaining results</h2>
+<section id="applying-exclusion-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="applying-exclusion-criteria">Applying exclusion criteria</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We will exclude participants</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># - if they fail our attention check item </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># (i.e. if they don't select "strongly agree" </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># as the responses despite being instructed to).</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data_after_exclusion <span class="ot">&lt;-</span> original_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(attention_coping <span class="sc">==</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># - if their responses to either of the discrepancy </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># attention checks is incorrect. If this leads to </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># more than 20% of participants being excluded, this </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># exclusion criterion will be relaxed.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>n_before <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_after_exclusion)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>data_after_exclusion <span class="ot">&lt;-</span> data_after_exclusion <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(attention_sc <span class="sc">==</span> <span class="st">"right"</span> <span class="sc">&amp;</span> attention_task <span class="sc">==</span> <span class="st">"right"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>n_after <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data_after_exclusion)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ((n_before <span class="sc">-</span> n_after) <span class="sc">/</span> n_before <span class="sc">&lt;=</span> <span class="fl">0.2</span>) {</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"No need to relax the exclusion criterion \</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">      </span><span class="sc">\n</span><span class="st">regarding the discrepancy attention checks."</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>No need to relax the exclusion criterion 
+      
+regarding the discrepancy attention checks.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># - if they indicate that we should not use their data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># in their response to our "use-me" item.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data_after_exclusion <span class="ot">&lt;-</span> data_after_exclusion <span class="sc">%&gt;%</span> <span class="fu">filter</span>(use_me <span class="sc">==</span> <span class="st">"yes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fazit: Auschluss von Versuchspersonen erfolgreich reproduziert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Im Einklang mit der von Brotzeller &amp; Gollwitzer (2025) berichten Anzahl, wurden n = 89 Personen von der Analyse ausgeschlossen.</p>
+</div>
+</div>
+</section>
+<section id="data-pre-processing" class="level3">
+<h3 class="anchored" data-anchor-id="data-pre-processing">Data Pre-Processing</h3>
+<p>Der Datensatz wird auf die Spalten reduziert, die für die Berechnung der Variablen des Regressionsmodells benötigt sind:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data_after_exclusion <span class="sc">%&gt;%</span> <span class="fu">select</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  subject_nr,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  condition_ofi,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">starts_with</span>(<span class="st">"sc_t1_0"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">starts_with</span>(<span class="st">"sc_t2_0"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  task_emotion_score_percent</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Die Selbstwahrnehmungen zu den Zeitpunkten t1 und t2 errechnen sich aus dem Mittelwert der Anworten auf die vier Items, mit denen die Selbstwahrnehmung abgefragt wurde:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sc_t1 =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(sc_t1_01, sc_t1_02, sc_t1_03, sc_t1_04))),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sc_t2 =</span> <span class="fu">rowMeans</span>(<span class="fu">across</span>(<span class="fu">c</span>(sc_t2_01, sc_t2_02, sc_t2_03, sc_t2_04))),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.before =</span> task_emotion_score_percent <span class="co"># höhere Übersichtlichkeit</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Die absoluten Selbstkonzeptänderungen lassen sich aus dem Betrag der Differenz zwischen den Selbstwahrnehmungen zu beiden Zeitpunkten berechnen:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sc_diff_absolute =</span> <span class="fu">abs</span>(sc_t2 <span class="sc">-</span> sc_t1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Die Größe der Diskrepanz (<code>SoD</code>) lässt sich aus dem Betrag der Differenz zwischen dem Feedback und der Selbstwahrnehmung zum Zeitpunkt t1 berechnen. Die Richtung der Diskrepanz (<code>DoD</code>) aus dem Vorzeichen dieser Differenz.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mistake 1: Inkohärenz bezüglich der Berechnung der Richtung der Diskrepanz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Im Codebook wird die Berechnung von <code>DoD</code> anders als im Artikel beschrieben. Die Beschreibung im Codebook ist falsch, weil hier die Diskrepanz zwischen Feedback und Selbstwahrnehmung aus der Differenz zwischen den Selbstwahrnehmungen zu beiden Zeitpunkten berechnet wird:</p>
+<blockquote class="blockquote">
+<p>“negative”: (sc_t2-sc_t1) &lt; 0<br>
+“neither positive nor negative”: (sc_t2-sc_t1) = 0<br>
+“positive”: (sc_t2-sc_t1) &gt; 0<br>
+</p>
+</blockquote>
+</div>
+</div>
+<p>Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading the Mind in the Eyes Test (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute discrepancy</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">discrepancy =</span> task_emotion_score_percent <span class="sc">-</span> ((sc_t1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">8</span>)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># size of discrepancy</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sod =</span> <span class="fu">abs</span>(discrepancy))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># direction of discrepancy</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dod =</span> <span class="fu">case_when</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  discrepancy <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"positive"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  discrepancy <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"negative"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  discrepancy <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">"neither positive nor negative"</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># discrepancy ist keine Variable im originalen Datensatz</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># und wird deshalb hier wieder entfernt.</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">!</span>discrepancy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Obstacle 1: Berechnung der Größe der Diskrepanz ist unterspezifiziert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Folgt man den Beschreibungen von Brotzeller &amp; Gollwitzer (2025) bei der Berechnung von <code>SoD</code> und <code>DoD</code>, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.</p>
+<p>Eine Inspektion des ursprünglichen Datensatzes hat ergeben, dass die Werte von <code>SoD</code> gerundet werden müssen, auch wenn das in keiner der Quellen Erwähnung findet. Auch die genaue Rundungsmethode wird nicht spezifiziert.</p>
+<p>Erst nach einigen Fehlversuchen konnte die richtige Rundungsmethode identifiziert werden. Sie entspricht der klassischen Rundungsmethode, d.h. Werte unter .5 werden abgerundet, Werte darüber hingegen aufgerundet. Weil R keine Standardfunktion für diese Rundungsmethode implementiert, musste sie eigens definiert werden.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>round_half_up <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># floor(x) rundet immer auf den nächsten Integer-Wert ab.</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">floor</span>(x <span class="sc">+</span> <span class="fl">0.5</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sod =</span> <span class="fu">abs</span>(task_emotion_score_percent <span class="sc">-</span> <span class="fu">round_half_up</span>(((sc_t1 <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span><span class="dv">8</span>)<span class="sc">*</span><span class="dv">100</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fazit: Erstellen der Variablen des Regressionsmodells erfolgreich reproduziert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nachdem Mistake 1 gelöst wurde und Obstacle 1 überwunden wurde, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(data_after_exclusion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>In 459 von 459 Fällen stimmen die Daten überein.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="regression-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="regression-analysis">Regression analysis</h3>
+<p>Aus der Analyse werden die Daten aller Versuchspersonen ausgeschlossen, deren Selbstwahrnehmung mit dem Feedback übereinstimmte:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dod <span class="sc">!=</span> <span class="st">"neither positive nor negative"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Von den  459 infragekommenden Versuchspersonen wurden zusätzliche n = 6 
+Personen von der Analyse ausgeschlossen.</code></pre>
+</div>
+</div>
+<p>Die Prädiktoren <code>DoD</code> und <code>opportunity for improvement (OFI)</code> werden effekt-kodiert:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">dod_num =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    dod,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"negative"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"positive"</span> <span class="sc">~</span> <span class="dv">1</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ec_condition_ofi =</span> <span class="fu">case_match</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    condition_ofi,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"low opportunity for improvement"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"high opportunity for improvement"</span> <span class="sc">~</span> <span class="dv">1</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Um die Interpretierbarkeit des Modells zu erhöhen, wird <code>SoD</code> z-standardisiert:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sod_standard =</span> <span class="fu">scale</span>(sod))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nun kann die Regressionanalyse durchgeführt werden. Dafür wird der <code>lm</code> Befehl verwendet, der in R standardmäßig implementiert ist:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(sc_diff_absolute <span class="sc">~</span> ec_condition_ofi<span class="sc">*</span>dod_num<span class="sc">*</span>sod_standard, data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Die Ergebnisse der Regressionsanalyse können mit dem folgenden Befehl inspiziert werden:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sc_diff_absolute ~ ec_condition_ofi * dod_num * 
+    sod_standard, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.9143 -0.6330 -0.1694  0.4057  3.8674 
+
+Coefficients:
+                                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                            1.085588   0.046627  23.283  &lt; 2e-16 ***
+ec_condition_ofi                       0.030227   0.046627   0.648    0.517    
+dod_num                               -0.376120   0.046627  -8.067 6.77e-15 ***
+sod_standard                           0.384810   0.054055   7.119 4.39e-12 ***
+ec_condition_ofi:dod_num              -0.035368   0.046627  -0.759    0.449    
+ec_condition_ofi:sod_standard         -0.001876   0.054055  -0.035    0.972    
+dod_num:sod_standard                  -0.307136   0.054055  -5.682 2.41e-08 ***
+ec_condition_ofi:dod_num:sod_standard  0.016376   0.054055   0.303    0.762    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8487 on 445 degrees of freedom
+Multiple R-squared:  0.1736,    Adjusted R-squared:  0.1606 
+F-statistic: 13.36 on 7 and 445 DF,  p-value: 1.12e-15</code></pre>
+</div>
+</div>
+<hr>
+<p>Es fällt auf, dass der <code>lm</code>-Befehl für die einzelnen Koeffizienten nicht die Effektstärken <span class="math inline">\(sr^2\)</span> (squared semi-partial correlations) berechnet. Da Brotzeller &amp; Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conflicting Choice 1: Mangelndes Wissen, um die Semipartialkorrelationen zu berechnen
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Da ich weder weiß, wie man <span class="math inline">\(sr^2\)</span> in R berechnet, noch, wie man diese Effektgröße händisch berechnet, muss ich an dieser Stelle die Berechnungsmethode aus dem Quellcode der Autoren übernehmen.</p>
+</div>
+</div>
+<p>Der Befehl <code>apa.reg.table</code> aus dem Paket <code>apaTables</code> berechnet <span class="math inline">\(sr^2\)</span> automatisch mit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apa.reg.table</span>(model_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Regression results using sc_diff_absolute as the criterion
+ 
+
+                             Predictor       b       b_95%_CI sr2  sr2_95%_CI
+                           (Intercept)  1.09**   [0.99, 1.18]                
+                      ec_condition_ofi    0.03  [-0.06, 0.12] .00 [-.00, .01]
+                               dod_num -0.38** [-0.47, -0.28] .12  [.07, .18]
+                          sod_standard  0.38**   [0.28, 0.49] .09  [.04, .14]
+              ec_condition_ofi:dod_num   -0.04  [-0.13, 0.06] .00 [-.00, .01]
+         ec_condition_ofi:sod_standard   -0.00  [-0.11, 0.10] .00 [-.00, .00]
+                  dod_num:sod_standard -0.31** [-0.41, -0.20] .06  [.02, .10]
+ ec_condition_ofi:dod_num:sod_standard    0.02  [-0.09, 0.12] .00 [-.00, .00]
+                                                                             
+                                                                             
+                                                                             
+             Fit
+                
+                
+                
+                
+                
+                
+                
+                
+     R2 = .174**
+ 95% CI[.10,.22]
+                
+
+Note. A significant b-weight indicates the semi-partial correlation is also significant.
+b represents unstandardized regression weights. 
+sr2 represents the semi-partial correlation squared.
+Square brackets are used to enclose the lower and upper limits of a confidence interval.
+* indicates p &lt; .05. ** indicates p &lt; .01.
+ </code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="d-evaluating-the-consistency-of-results" class="level2">
+<h2 class="anchored" data-anchor-id="d-evaluating-the-consistency-of-results">(d) Evaluating the Consistency of Results</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fazit: Die berichteten Ergebnisse konnten reproduziert werden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion <strong>konsistente</strong> Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar <strong>numerisch identisch</strong> zu den in Tabelle 2 (S. 1739) enthaltenen Werten sind.</p>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

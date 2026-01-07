@@ -1,49 +1,84 @@
 ---
-title: "Re-Implementation Reproduction"
+title: "Appendix B"
 format:
   html:
     toc: true
-    toc-depth: 5
+  pdf:
+    documentclass: scrartcl
+    toc: false
+    number-sections: false
+    colorlinks: true
+    include-in-header: 
+      text: '\pagenumbering{gobble}'
 editor: visual
 ---
 
-Laden der benötigten Bibliotheken:
+In dieser Datei wird eine vollständige Re-Implementation Reproduction von Studie 4 in Brotzeller & Gollwitzer (2025) nach den Schritten durchgeführt, die das *Conceptual Framework for Computational Reproductions* (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei findet sich in den [Zusatzmaterialien](https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git) der vorliegenden Bachelorarbeit.
+
+## (a) Defining the Scope
+
+-   **Works**: Studie 4 aus Brotzeller & Gollwitzer (2025)
+-   **Claims**:
+    -   H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)
+    -   H2 widerlegt: Die wahrgenommenen Verbesserungsmöglichkeiten ziehen keine Asymmetrien in den Selbstkonzeptänderungen nach sich (S. 1739)
+-   **Results**: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren `size of discrepancy (SoD)`, `direction of discrepancy (DoD)` und `opportunity for improvement (OFI)` sowie all ihren Interaktionseffekten ab. Das Modell sagt die absoluten Selbstkonzeptänderungen vorher.
+-   **Obtained data**: Anonymisierte Primärdaten, die [hier](https://osf.io/yadqw) aus dem OSF abrufbar sind.
+    -   Die Primärdaten wurden schon so weit vorverarbeitet, dass Prädiktorvariablen des Regressionmodells bereits aus anderen Variablen im Datensatz berechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.
+    -   Der Datensatz enthält noch alle Versuchspersonen, die Brotzeller & Gollwitzer (2025) aus der finalen Analyse ausschließen. Die Anwendung der präregistrierten Ausschlusskriterien kann und wird deshalb wiederholt werden.
+-   **Involved descriptions**: Die Beschreibungen aus den folgenden Quellen werden miteinbezogen und auf etwaige Inkohärenzen überprüft:
+    -   Beschreibungen der Hypothesen, der Methoden, des Vorgehens und der Ergebnisse von Studie 4 im Artikel (S. 1738-1739)
+    -   Beschreibungen der Schlussfolgerungen aus den Ergebnissen von Studie 4 in der Diskussion (S. 1740)
+    -   Beschreibungen der Hypothesen, der geplanten Berechnung sowie der Ausschlusskriterien in der [Präregistierung](https://aspredicted.org/rr4r7.pdf)
+    -   Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im Codebook
+    -   Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den Materialien zu Studie 4 zurückgegriffen werden
+-   **Inherited source code**: Der Quellcode für die Berechnung wird re-implementiert. Es wird nur dann auf Teile des [Quellcodes der Autoren](https://osf.io/yadqw) zurückgegriffen, wenn eine offene Frage bei der Implementierung nicht eigenständig geklärt werden kann.
+
+## (b) Checking the Preconditions
+
+-   Die anonymisierten [Primärdaten](https://osf.io/yadqw) konnten abgerufen und eingebunden werden:
+
+```{r}
+original_data <- read.csv2("../data/CleanData_S4_final.csv")
+```
+
+-   Die Autoren führen ihre Berechnung in R (R Core Team, 2018) durch. Für die Reproduktion wird die folgende R-Umgebung verwendet:
+
+```{r}
+#| echo: false
+
+comp_env <- sessionInfo()
+cat(paste0(comp_env$R.version$version.string, "\n", comp_env$platform, "\n", comp_env$running))
+```
+
+-   Die benötigten R-Pakete konnten installiert und eingebunden werden:
 
 ```{r}
 #| warning: false
 #| results: false
 
 library(dplyr)
-library(sjPlot)
 library(apaTables)
 ```
 
-::: {.callout-note collapse="TRUE"}
-## Computational environment
+```{r, package-versions}
+#| echo: false
 
-```{r, session-info}
-sessionInfo()
-```
-:::
+comp_env <- sessionInfo()
+dplyr_version <- paste(comp_env$otherPkgs$dplyr$Package, "version", comp_env$otherPkgs$dplyr$Version)
+apaTables_version <- paste(comp_env$otherPkgs$apaTables$Package, "version", comp_env$otherPkgs$apaTables$Version)
 
-Laden des von den Autoren bereitgestellten Datensatzes.
-
-```{r}
-# Eine Inspektion der textualen Darstellung der CSV-Datei zeigt,
-# dass die Felder mit einem Semikolon getrennt sind, weswegen 
-# read.csv2 statt read.csv verwendet wird.
-original_data <- read.csv2("../data/CleanData_S4_final.csv")
+cat(paste0(dplyr_version, "\n", apaTables_version))
 ```
 
-## Ausschluss von Versuchspersonen
+::: callout-tip
+## Fazit: Die Reproduktion kann durchgeführt werden
 
-::: callout-note
-## Description-scope (Ausschlusskriterien)
-
-Die Ausschlusskriterien werden in der Präregistrierung beschrieben.
+Alle Voraussetzungen für die Durchführung der Reproduktion sind erfüllt.
 :::
 
-Anwenden der präregistrierten Ausschlusskriterien.
+## (c) Obtaining results
+
+### Applying exclusion criteria
 
 ```{r}
 # We will exclude participants
@@ -52,20 +87,23 @@ Anwenden der präregistrierten Ausschlusskriterien.
 # (i.e. if they don't select "strongly agree" 
 # as the responses despite being instructed to).
 data_after_exclusion <- original_data %>% filter(attention_coping == 9)
+```
 
+```{r}
 # - if their responses to either of the discrepancy 
 # attention checks is incorrect. If this leads to 
 # more than 20% of participants being excluded, this 
 # exclusion criterion will be relaxed.
-n_before_exclusion <- nrow(data_after_exclusion)
+n_before <- nrow(data_after_exclusion)
+
 data_after_exclusion <- data_after_exclusion %>%
   filter(attention_sc == "right" & attention_task == "right")
-n_after_exclusion <- nrow(data_after_exclusion)
 
-if ((n_before_exclusion - n_after_exclusion) / n_before_exclusion > 0.2) {
-  print("Need to relax the exclusion criterion regarding the discrepancy attention checks.")
-} else {
-  print("No need to relax the exclusion criterion regarding the discrepancy attention checks.")
+n_after <- nrow(data_after_exclusion)
+
+if ((n_before - n_after) / n_before <= 0.2) {
+  cat("No need to relax the exclusion criterion \
+      \nregarding the discrepancy attention checks.")
 }
 
 # - if they indicate that we should not use their data
@@ -73,27 +111,15 @@ if ((n_before_exclusion - n_after_exclusion) / n_before_exclusion > 0.2) {
 data_after_exclusion <- data_after_exclusion %>% filter(use_me == "yes")
 ```
 
-Die Autoren berichten, dass das Anwenden der präregistrierten Ausschlusskriterien zum Ausschluss von `n = 89` Versuchspersonen geführt hätte, sodass von den ursprünglichen `548` Personen nur noch `N = 459` übrig geblieben wären (S. 1738). Konnten diese Anzahlen reproduziert werden?
-
-```{r}
-original_N <- nrow(original_data)
-N <- nrow(data_after_exclusion)
-n <- original_N - N
-
-sprintf("Enthält der ursprüngliche Datensatz 548 Personen? >%s", original_N == 548)
-sprintf("Wurden n = 89 Personen ausgeschlossen? >%s", n == 89)
-sprintf("Sind also N = 459 Personen übriggeblieben? >%s", N == 459)
-```
-
 ::: callout-tip
-## Fazit: Übereinstimmung
+## Fazit: Auschluss von Versuchspersonen erfolgreich reproduziert
 
-Das Anwenden der Ausschlusskriterien führt zur gleichen Anzahl an ausgeschlossenen Personen wie berichtet wird. Natürlich ist unklar, ob wirklich dieselben Personen ausgeschlossen wurden, dies ist aber sehr wahrscheinlich. Es werden deshalb *keine Abweichungen* zwischen den Ergebisse der Reproduktion und den berichteten Ergebnissen aufgrund unterschiedlicher Ausschluss-Implementierung erwartet.
+Im Einklang mit der von Brotzeller & Gollwitzer (2025) berichten Anzahl, wurden n = `r nrow(original_data) - nrow(data_after_exclusion)` Personen von der Analyse ausgeschlossen.
 :::
 
-## Vorverarbeitung des Datensatzes {#sec-processing}
+### Data Pre-Processing
 
-Zur Berechnung des Regressionsmodells (siehe @sec-modeling, *Modeling*-Phase) benötigt man die Prädiktorvariablen `size of discrepany`, `direction of discrepancy` sowie `opportunity for improvement` das Kriterium `absolute self-concept change`. Diese sind bereits im bereitgestellten Datensatz enthalten und errechnen sich aus den Primärdaten, die sich ebenfalls Datensatz befinden. Die Phasen *Data-Collection* und *Data-Entry* werden von den Autoren geerbt, aber die Weiterverarbeitung (*pre-processing*) der Primärdaten zu den im Modell benötigten Variablen kann wiederholt werden. Dazu wird der Datensatz zunächst wieder auf die benötigten Primärdaten reduziert:
+Der Datensatz wird auf die Spalten reduziert, die für die Berechnung der Variablen des Regressionsmodells benötigt sind:
 
 ```{r}
 data <- data_after_exclusion %>% select(
@@ -105,15 +131,7 @@ data <- data_after_exclusion %>% select(
 )
 ```
 
-::: callout-note
-## Description scope (pre-processing)
-
-Für die folgende Weiterverarbeitung der Primärdaten werden Beschreibungen aus dem Codebook, dem Artikel und aus den Materialien zu Studie 4 miteinbezogen.
-:::
-
-##### *Selbstwahrnehmungen*
-
-Die Selbstwahrnehmungen zu den Zeitpunkten t1 und t2 errechnen sich aus dem Mittelwert der Antworten auf den vier Items zur Selbstwahrnehmung, die zu den beiden Zeitpunkten jeweils abgefragt wurden. Da die Items eine Antwortskala von 1-9 besitzen, bewegt sich auch der Mittelwert in diesem Wertebereich.
+Die Selbstwahrnehmungen zu den Zeitpunkten t1 und t2 errechnen sich aus dem Mittelwert der Anworten auf die vier Items, mit denen die Selbstwahrnehmung abgefragt wurde:
 
 ```{r}
 data <- data %>% mutate(
@@ -123,17 +141,25 @@ data <- data %>% mutate(
 )
 ```
 
-##### *Absolute Selbstkonzeptänderung*
-
-Das Kriterium *absolute self-concept change* kann ganz einfach aus dem Betrag der Differenz der Selbstwahrnehmungen zu beiden Zeitpunkten errechnet werden: $|sc_t2 - sc_t1|$. Es wird also nur die Größe der Selbstkonzeptänderung vorhergesagt, unabhängig von ihrer Richtung.
+Die absoluten Selbstkonzeptänderungen lassen sich aus dem Betrag der Differenz zwischen den Selbstwahrnehmungen zu beiden Zeitpunkten berechnen:
 
 ```{r}
 data <- data %>% mutate(sc_diff_absolute = abs(sc_t2 - sc_t1))
 ```
 
-##### *Größe und Richtung der Diskrepanz zwischen Feedback und Selbstwahrnehmung*
+Die Größe der Diskrepanz (`SoD`) lässt sich aus dem Betrag der Differenz zwischen dem Feedback und der Selbstwahrnehmung zum Zeitpunkt t1 berechnen. Die Richtung der Diskrepanz (`DoD`) aus dem Vorzeichen dieser Differenz.
 
-Aus der Differenz zwischen Feedback und der Selbstwahrnehmung zum Zeitpunkt t1 kann die Größe der Diskrepanz als Betrag der Differenz berechnet werden und die Richtung der Diskrepanz kann dem Vorzeichen der Differenz entnommen werden. Da das Feedback in dieser Studie der Testwert im Emotions-Ekennungtest ist und dieser als Prozentwert vorliegt (`task_emotion_score_percent`), muss auch die Selbstwahrnehmung zum Zeitpunkt t1 (`sc_t1`) in einen Prozentwert umgerechnet werden. Da `sc_t1` Werte zwischen 1 und 9 annehmen kann und diese Skala keinen Nullpunkt hat (bei einem minimalen Wert von 1 ergäbe die Umrechnung keine 0%, sondern $\frac{1}{9}\times 100=$ `r round(1/9*100)`%), muss die Skala durch Substraktion von 1 auf 1-8 reduziert werden. Der umskalierte Testwert (`sc_t1_prep`) wird dann durch 8 geteilt.
+::: callout-important
+## Mistake 1: Inkohärenz bezüglich der Berechnung der Richtung der Diskrepanz
+
+Im Codebook wird die Berechnung von `DoD` anders als im Artikel beschrieben. Die Beschreibung im Codebook ist falsch, weil hier die Diskrepanz zwischen Feedback und Selbstwahrnehmung aus der Differenz zwischen den Selbstwahrnehmungen zu beiden Zeitpunkten berechnet wird:
+
+> "negative": (sc_t2-sc_t1) \< 0\
+> "neither positive nor negative": (sc_t2-sc_t1) = 0\
+> "positive": (sc_t2-sc_t1) \> 0\
+:::
+
+Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading the Mind in the Eyes Test (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.
 
 ```{r}
 # absolute discrepancy
@@ -157,118 +183,18 @@ data <- data %>% select(!discrepancy)
 ```
 
 ::: callout-important
-## Mistake: Incoherent descriptions
+## Obstacle 1: Berechnung der Größe der Diskrepanz ist unterspezifiziert
 
-Im Artikel wird auf S. 1737-1738 die Berechnung von SoD und DoD beschrieben. Die Variable DoD kodiert demnach das Vorzeichen der Differenz zwischen dem Testwert und der Selbstwahrnehmung zum Zeitpunkt t1. Im Codebook wird sie hingegen aus dem Vorzeichen *der Differenz zwischen den Selbstwahrnehmungen* zu beiden Zeitpunkten erstellt:
+Folgt man den Beschreibungen von Brotzeller & Gollwitzer (2025) bei der Berechnung von `SoD` und `DoD`, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.
 
-> "negative": (sc_t2-sc_t1) \< 0\
-> "neither positive nor negative": (sc_t2-sc_t1) = 0\
-> "positive": (sc_t2-sc_t1) \> 0\
+Eine Inspektion des ursprünglichen Datensatzes hat ergeben, dass die Werte von `SoD` gerundet werden müssen, auch wenn das in keiner der Quellen Erwähnung findet. Auch die genaue Rundungsmethode wird nicht spezifiziert.
 
-Da die Diskrepanz ja den Abstand zwischen dem Feedback und der ursprünglichen Selbstwahrnehmung ausdrücken soll, wird die Beschreibung im Artikel als die inhaltlich richtige angesehen. Die Beschreibung im Codebook ist wahrscheinlich ein **Fehler**.
-
-Da allerdings eine vollständige Übereinstimmung erreicht werden kann (), ist davon auszugehen, dass die Berechnung von DoD bei den Autoren der richtigen Beschreibung im Artikel folgte. **Der Fehler im Codebook sollte kann also keine potenziellen Abweichungen der Ergebnisse erklären.**
+Erst nach einigen Fehlversuchen konnte die richtige Rundungsmethode identifiziert werden. Sie entspricht der klassischen Rundungsmethode, d.h. Werte unter .5 werden abgerundet, Werte darüber hingegen aufgerundet. Weil R keine Standardfunktion für diese Rundungsmethode implementiert, musste sie eigens definiert werden.
 :::
-
-::: callout-caution
-## Data-Scope
-
-Die Berechnung von `task_emotion_score_percent` wird von den Autoren übernommen (**inherited**). Fehler im Erstellen dieses Testwerts können deshalb nicht erkannt werden.
-:::
-
-::: callout-note
-## Implementation Choice: Bewusste Abweichungen
-
-Die Variable `sc_t1_prep` ist lediglich eine Helfervariable und wird deshalb nicht extra erstellt und als eigene Variable in den Datensatz aufgenommen. Außerdem verwenden die Autoren bei der Berechnung der Diskrepanz die Variable `sc_t1_mean` für die Selbstwahrnehmung; diese ist aber äquivalent zu `sc_t1` und wird deshalb nicht extra berechnet. Durch beide Abweichungen sollte zu *keiner* Abweichung der Ergebnisse führen.
-:::
-
-::: callout-note
-Die oben beschriebene Formel zur Umrechnung in einen Prozentwert wird im Codebook nicht ausgeführt, kann aber einer Anmerkung in den Materialen zu Studie 4 entnommen werden:
-
-> Anmerkung: Der rückgemeldete Prozentsatz zu den Fähigkeiten zur Emotionserkennung lässt sich mit der Formel (Itemmittelwert Selbsteinschätzung - 1) / 8 \*100 berechnen und wurde im untenstehenden Text für \[prozentuale Selbsteinschätzung\] eingesetzt.
-:::
-
-### Übereinstimmung der Datensätze
-
-```{r}
-matches <- data %>%
-  inner_join(data_after_exclusion)
-
-sprintf(
-  "In %s von %s Fällen stimmen die Daten überein.",
-  nrow(matches),
-  nrow(data_after_exclusion)
-)
-```
-
-::: {#imp-rounding .callout-important}
-## Obstacle: Underspecification
-
-Bei einer visuelle Inspektion der Datensätze konnte eine vollständige Erklärung dafür gefunden werden, warum die Datensätze nur in `r nrow(matches)` Fällen übereinstimmen: Die Variable `sod` ist auf *ganze Zahlen gerundet*.
-
-Ein solche Rundung wird bei den Beschreibungen der Berechnung von SoD weder im Artikel noch im Codebook genannt. Es spricht mehr dafür, dass die Rundung nicht bei Berechnung der SoD geschieht, sondern bereits davor bei der Berechnung der Diskrepanz: Wahrscheinlich wird die Selbstwahrnehmung bei der Berechnung der Diskrepanz in einen *ganzzahligen* Prozentwert umgerechnet. Der Testwert liegt ohnehin schon als ganzzahliger Prozentwert vor und wird den Versuchspersonen wahrscheinlich auch als solcher mitgeteilt. Das Beispiel aus Studie 2 auf S. 1735 legt das nahe:
-
-> They were then asked to rate their ability (see below) and were immediately shown their self-perception score, which was created by converting participants’ mean self-perception into a percentage. An exemplary feedback read: “On a scale of 0% (very low ability) to 100% (very high ability) your self-rated ability for spatio-visual thinking is at: 50%.”
-
-Auch die Selbstwahrnehmung wird als Prozenwert zurückgemeldet:
-
-> Auf einer Skala von 0% (sehr geringe) bis 100% (sehr gute Fähigkeit zum Erkennen von Emotionen an der Augenpartie) liegt Ihre selbsteingeschätzte Fähigkeit bei:\
-> \[prozentuale Selbsteinschätzung\] %\
-> Dieser Wert wurde berechnet, indem der Durchschnitt aus Ihren Antworten gebildet wurde.
-
-Es liegt also die Vermutung nahe, dass die Selbsteinschätzung auch bereits als Ganzzahl mitgeteilt wird, zumal die Versuchspersonen bei den Attention-Checks später im Experiment die zurückgemeldete Selbstwahrnehmung wiedererkennen bzw. wiedererinnern müssen, was bei einer Ganzzahl einfacher gehen dürfte als bei einer Fließkommazahl. Bei der Formel zur Umwandlung der durchschnittlichen Selbstwahrnehmung in einen Prozentwert, die in den Materialien zu Studie 4 angegeben wird, wird nichts von einer Rundung auf ganze Zahlen berichtet, was eine **Unterspezifizierung** bedeutet.
-:::
-
-Wird bei der Berechnung der Diskrepanz die Selbstwahrnehmung zunächst zu einem *ganzzahligen* Prozentwert umgewandelt, berechnet sich `sod` folgendermaßen:
-
-```{r}
-data <- data %>% mutate(
-  sod = abs(task_emotion_score_percent - round(((sc_t1 - 1)/8)*100))
-)
-# Bemerkung: DoD ändert sich nicht durch die neue Berechnung der Diskrepanz
-```
-
-Jetzt kann noch einmal die Übereinstimmung mit den Originaldaten bestimmt werden:
-
-```{r}
-matches <- data %>%
-  inner_join(data_after_exclusion)
-
-sprintf(
-  "In %s von %s Fällen stimmen die Daten überein.",
-  nrow(matches),
-  nrow(data_after_exclusion)
-)
-```
-
-Dass trotz der Rundung **keine Übereinstimmung** erzielt werden kann, kann nach näherer Inspektion auf Unterschiede in der Rundungsmethode zurückgeführt werden. Die `round`-Funktion rundet Werte mit .5 auf die nächste *gerade* Zahl statt auf die nächste ganze Zahl. Tatsächlich konnte stichprobenartig bestätigt werden, dass Werte mit .5 bei den Autoren auf die nächste ganze Zahl aufgerundet werden.
-
-```{r}
-#| include: false
-
-data_tmp <- data %>%
-  select(
-    subject_nr, sc_t1, task_emotion_score_percent, sod
-  ) %>%
-  mutate(sod_match = TRUE)
-
-sod_matches <- data_after_exclusion %>%
-  select(
-    subject_nr, sc_t1, sc_t1_prep, sc_t1_percent, 
-    task_emotion_score_percent, sod
-  ) %>%
-  left_join(data_tmp, keep = TRUE) %>%
-  filter(is.na(sod_match))
-```
-
-Deshalb wird im folgenden zur Rundung eine spezielle Funktion verwendet, die Zahlen mit .5 auf die nächste ganze Zahl aufrundet, und zwar unabhängig davon ob diese auch die nächste *gerade* Zahl ist:
 
 ```{r}
 round_half_up <- function(x) {
-  # floor rundet immer auf den nächsten Integer ab.
-  # 12.8 + 0.5 = 13.2; floor(13.2) = 13
-  # 12.3 + 0.5 = 12.8; floor(12.8) = 12
-  # 12.5 + 0.5 = 13; floor(13) = 13
+  # floor(x) rundet immer auf den nächsten Integer-Wert ab.
   floor(x + 0.5)
 }
 
@@ -277,85 +203,50 @@ data <- data %>% mutate(
 )
 ```
 
-Jetzt kann noch einmal die Übereinstimmung mit den Originaldaten bestimmt werden:
+::: callout-tip
+## Fazit: Erstellen der Variablen des Regressionsmodells erfolgreich reproduziert
+
+Nachdem Mistake 1 gelöst wurde und Obstacle 1 überwunden wurde, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:
 
 ```{r}
+#| warning: false
+#| results: false
+
 matches <- data %>%
   inner_join(data_after_exclusion)
-
-sprintf(
-  "In %s von %s Fällen stimmen die Daten überein.",
-  nrow(matches),
-  nrow(data_after_exclusion)
-)
-```
-
-::: callout-note
-## Implementation choice
-
-Das Hindernis der Unterspezifizierung der Rundungsmethode bei der Berechnung des ganzzahligen Selbswahrnehmungs-Prozentwerts (siehe @imp-rounding) konnte durch die Wahl der folgenden Funktion überwunden werden:
-
-``` r
-round_half_up <- function(x) {
-  # floor rundet immer auf den nächsten Integer ab.
-  floor(x + 0.5)
-}
-```
-:::
-
-::: callout-tip
-## Übereinstimmung
-
-Durch das Auflösen der Hindernis, dass die Formel zur Berechnung der prozentualen Selbstwahrnehmung *unterspezifiziert* ist, kann eine Übereinstimmung mit den Originaldaten erreicht werden. Etwaige Abweichungen der berichteten und reprodzierten Ergebnisse kann deshalb **nicht** auf Fehler bei der Berechnung der Prädiktorvariablen und des Kriteriums zurückgehen (aber: Fehler während der *Data-Collection-* und *Date-Entry-*Phasen können *nicht* erkannt werden).
-:::
-
-## Berechnung {#sec-modeling}
-
-Zum Test der präregistrierten Hypothesen berechnen die Autoren ein Regressionsmodell mit der Kriteriumsvariable `absolute self-concept change` und den Prädiktorvariablen `size of discrepancy`, `direction of discrepancy` und `opportunity for improvement`. Die Berechnung dieser Variablen konnte in Abschnitt @sec-processing erfolgreich reproduziert werden.
-
-::: callout-note
-## Description scope (Modeling und Reporting)
-
-Das Regressionmodell und die mit ihm errechneten Ergebnisse werden im Artikel (im Methodenteil, im Ergebnis-Teil und in der Diskussion) sowie in der Präregistrierung beschrieben. Für die Effektkodierung der Prädiktoren werden außerdem die Beschreibungen aus dem Codebook miteinbezogen.
-:::
-
-##### *Auschluss bei keiner Diskrepanz*
-
-Alle Personen mit *keiner* Diskrepanz zwischen Feedback und Selbstwahrnehmung werden aus den Analysen ausgeschlossen.
-
-```{r, dod-ofi-na-check}
-#| include: false
-
-# Sanity-Check: Gibt es Personen mit einem NA-Wert
-# als dod?
-table(is.na(data$dod))
-table(data$dod)
-
-# Sanity-Check: Gibt es Personen mit einem NA-Wert
-# als condition of opportunity for improvement?
-table(is.na(data$condition_ofi))
-table(data$condition_ofi)
 ```
 
 ```{r}
-# Bemerkung: Die Daten enthalten für die Variable dod keine NA-Werte,
-# sodass durch den folgenden logischen Filter keine NA-Werte beibehalten
-# würden.
-data <- data %>% filter(dod != "neither positive nor negative")
+#| echo: false
 
-sprintf("%s Personen von %s wurden aus der Analyse ausgeschlossen,
-        weil es keine Diskrepanz zwischen Feedback und Selbst-
-        wahrnehmung gab.", N - nrow(data), N)
-table(data$dod)
+cat(paste("In", nrow(matches), "von", nrow(data_after_exclusion), "Fällen stimmen die Daten überein."))
+```
+:::
+
+### Regression analysis
+
+Aus der Analyse werden die Daten aller Versuchspersonen ausgeschlossen, deren Selbstwahrnehmung mit dem Feedback übereinstimmte:
+
+```{r}
+#| echo: false
+#| results: false
+
+n_before <- nrow(data)
 ```
 
-#### Implemetierung und Durchführung der Regressionsanalyse (*Modeling*-Phase)
+```{r}
+data <- data %>% filter(dod != "neither positive nor negative")
+```
 
-##### *Effekt-Kodierung*
+```{r}
+#| echo: false
 
-Die Autoren beschreiben, dass die kategorialen Variablen (Faktoren) `direction of discrepancy` und `opportunity for improvement` *effekt-kodiert* werden, d.h. nicht dummy-kodiert werden:
+cat(paste("Von den ", n_before, "infragekommenden Versuchspersonen wurden zusätzliche n =", n_before - nrow(data), "\nPersonen von der Analyse ausgeschlossen."))
+```
 
-```{r, effect-coding}
+Die Prädiktoren `DoD` und `opportunity for improvement (OFI)` werden effekt-kodiert:
+
+```{r}
 data <- data %>% mutate(
   dod_num = case_match(
     dod,
@@ -373,66 +264,46 @@ data <- data %>% mutate(
 )
 ```
 
-##### *Zentrierung der Größe der Diskrepanz*
-
-Zur besseren Interpretierbarkeit wird die `size of discrepancy` z-standardisiert:
+Um die Interpretierbarkeit des Modells zu erhöhen, wird `SoD` z-standardisiert:
 
 ```{r}
 data <- data %>% mutate(sod_standard = scale(sod))
 ```
 
-##### *Regressionsanalyse* {#sec-regression}
-
-Das Regressionmodell beinhaltet die drei Prädiktoren und all ihre Interaktionen. Diese können innerhalb des `formula`-Arguments des `lm`-Befehls mit `*` zwischen den drei Prädiktoren angegeben werden (die Reihenfolge, in denen die Prädiktoren in die Formel aufgenommen werden, spielt keine Rolle):
+Nun kann die Regressionanalyse durchgeführt werden. Dafür wird der `lm` Befehl verwendet, der in R standardmäßig implementiert ist:
 
 ```{r}
 model_fit <- lm(sc_diff_absolute ~ ec_condition_ofi*dod_num*sod_standard, data)
 ```
 
-::: callout-note
-## Implementation choice
-
-Die multiple ineare Regression (MLR) wird mit hier dem Standard-R-Befehl `lm` berechnet.
-:::
-
-::: callout-note
-## Hidden implementation choice
-
-Verwendet man den `lm`-Befehl in R, wird automatisch ein Intercept modelliert. Da die Autoren keine Aussage darüber machen, muss an dieser Stelle der bereitgestellte Quellcode befragt werden: Hier wird nichts an den Standard-Einstellungen des `lm`-Befehls geändert, sodass ein Interzept mitberechnet wird.
-:::
-
-#### Berichten der Ergebnisse (*Reporting*-Phase)
-
-Die geschätzten Parameter des Modells sind:
+Die Ergebnisse der Regressionsanalyse können mit dem folgenden Befehl inspiziert werden:
 
 ```{r}
 summary(model_fit)
 ```
 
-Die Koeffizienten können mit der `tab_model`-Funktion aus dem `jsPlot`-Paket als HTML-Tabelle dargestellt werden:
+------------------------------------------------------------------------
 
-```{r}
-tab_model(model_fit)
-```
+Es fällt auf, dass der `lm`-Befehl für die einzelnen Koeffizienten nicht die Effektstärken $sr^2$ (squared semi-partial correlations) berechnet. Da Brotzeller & Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.
 
-Die Autoren geben in Tabelle 2 auf S. 1739 für all Koeffizienten zusäzlich auch die jeweiligen *squared semi-partial correlations* ($sr^2$) als Effektstärken an. Diese werden nicht direkt vom `lm`-Befehl ausgegeben und müssen extra berechnet werden. Die Autoren verwenden die `apa.reg.table`-Funktion zum Darstellen der Koeffizienten; diese Funktion berechnet automatisch auch $sr^2$ mit:
+::: callout-note
+## Conflicting Choice 1: Mangelndes Wissen, um die Semipartialkorrelationen zu berechnen
+
+Da ich weder weiß, wie man $sr^2$ in R berechnet, noch, wie man diese Effektgröße händisch berechnet, muss ich an dieser Stelle die Berechnungsmethode aus dem Quellcode der Autoren übernehmen.
+:::
+
+Der Befehl `apa.reg.table` aus dem Paket `apaTables` berechnet $sr^2$ automatisch mit:
 
 ```{r}
 apa.reg.table(model_fit)
 ```
 
-::: callout-note
-## Hidden implementation choice
+------------------------------------------------------------------------
 
-Um zu verstehen, wie die Berechnung von $sr^2$ implementiert wurde, mussten die Beschreibungen im Quellcode zu Rate gezogen werden: Die Autoren lassen die Effektstärken von der `apa.reg.table`-Funktion automatisch mitberechnen.
-:::
-
-## Vergleich der Ergebnisse
-
-Ein manueller Vergleich der reproduzierten Ergebnisse mit den Ergebnissen, die im Fließtext und in Tabelle 2 auf S. 1739 des Artikels berichtet werden, zeigt, dass die Ergebnisse konsitent sind. Da die Befehle zur Berechnung des Regressionmodells in Abschnitt @sec-regression identisch mit den Befehlen im Quellcode sind, sind die Ergebnisse sogar identisch (z.B. wegen gleicher Rundung der Parameterschätzungen).
+## (d) Evaluating the Consistency of Results
 
 ::: callout-tip
-## Übereinstimmung
+## Fazit: Die berichteten Ergebnisse konnten reproduziert werden
 
-Die reproduzierten Ergebnisse sind konsistent zu den berichteten Ergebnissen. Der Logik von Reproduktionen im *Conceptual Framework For Computational Reproductions* zufolge kann deshalb darauf ausgegangen werden, dass keine *Implementation-Mistakes* und keine *Reporting-Mistakes* aufgetreten sind. Dass die Ergebniss identisch sind, legt Zeugnis davon ab, dass die Wahl des Berechnungsumgebung (*Computational-Choice*) und die Wahl der Implemtierungsumgebung (*Environmental-Choice*) der Wahl der Originalautoren gleicht.
+Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion **konsistente** Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar **numerisch identisch** zu den in Tabelle 2 (S. 1739) enthaltenen Werten sind.
 :::
