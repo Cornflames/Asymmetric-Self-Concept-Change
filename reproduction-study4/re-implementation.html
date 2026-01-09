@@ -143,7 +143,7 @@ window.Quarto = {
 </header>
 
 
-<p>In dieser Datei wird eine vollständige Re-Implementation Reproduction von Studie 4 in Brotzeller &amp; Gollwitzer (2025) nach den Schritten durchgeführt, die das <em>Conceptual Framework for Computational Reproductions</em> (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei findet sich in den <a href="https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git">Zusatzmaterialien</a> der vorliegenden Bachelorarbeit.</p>
+<p>In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller &amp; Gollwitzer (2025) nach den Schritten durchgeführt, die das <em>Conceptual-Framework-for-Computational-Reproductions</em> (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den <a href="https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git">Zusatzmaterialien</a> der vorliegenden Bachelorarbeit.</p>
 <section id="a-defining-the-scope" class="level2">
 <h2 class="anchored" data-anchor-id="a-defining-the-scope">(a) Defining the Scope</h2>
 <ul>
@@ -153,10 +153,10 @@ window.Quarto = {
 <li>H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)</li>
 <li>H2 widerlegt: Die wahrgenommenen Verbesserungsmöglichkeiten ziehen keine Asymmetrien in den Selbstkonzeptänderungen nach sich (S. 1739)</li>
 </ul></li>
-<li><strong>Results</strong>: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren <code>size of discrepancy (SoD)</code>, <code>direction of discrepancy (DoD)</code> und <code>opportunity for improvement (OFI)</code> sowie all ihren Interaktionseffekten ab. Das Modell sagt die absoluten Selbstkonzeptänderungen vorher.</li>
+<li><strong>Results</strong>: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren <code>size of discrepancy (SoD)</code>, <code>direction of discrepancy (DoD)</code> und <code>opportunity for improvement (OFI)</code> sowie all ihren Interaktionen ab. Das Modell sagt die <em>absoluten</em> Selbstkonzeptänderungen vorher.</li>
 <li><strong>Obtained data</strong>: Anonymisierte Primärdaten, die <a href="https://osf.io/yadqw">hier</a> aus dem OSF abrufbar sind.
 <ul>
-<li>Die Primärdaten wurden schon so weit vorverarbeitet, dass Prädiktorvariablen des Regressionmodells bereits aus anderen Variablen im Datensatz berechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.</li>
+<li>Die Primärdaten wurden schon insofern vorverarbeitet, als die Prädiktorvariablen des Regressionmodells bereits aus den Primärdaten im Datensatz errechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.</li>
 <li>Der Datensatz enthält noch alle Versuchspersonen, die Brotzeller &amp; Gollwitzer (2025) aus der finalen Analyse ausschließen. Die Anwendung der präregistrierten Ausschlusskriterien kann und wird deshalb wiederholt werden.</li>
 </ul></li>
 <li><strong>Involved descriptions</strong>: Die Beschreibungen aus den folgenden Quellen werden miteinbezogen und auf etwaige Inkohärenzen überprüft:
@@ -164,8 +164,8 @@ window.Quarto = {
 <li>Beschreibungen der Hypothesen, der Methoden, des Vorgehens und der Ergebnisse von Studie 4 im Artikel (S. 1738-1739)</li>
 <li>Beschreibungen der Schlussfolgerungen aus den Ergebnissen von Studie 4 in der Diskussion (S. 1740)</li>
 <li>Beschreibungen der Hypothesen, der geplanten Berechnung sowie der Ausschlusskriterien in der <a href="https://aspredicted.org/rr4r7.pdf">Präregistierung</a></li>
-<li>Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im Codebook</li>
-<li>Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den Materialien zu Studie 4 zurückgegriffen werden</li>
+<li>Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im <a href="https://osf.io/yadqw">Codebook</a></li>
+<li>Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den <a href="https://osf.io/yadqw">Zusatzmaterialien zu Studie 4</a> zurückgegriffen werden</li>
 </ul></li>
 <li><strong>Inherited source code</strong>: Der Quellcode für die Berechnung wird re-implementiert. Es wird nur dann auf Teile des <a href="https://osf.io/yadqw">Quellcodes der Autoren</a> zurückgegriffen, wenn eine offene Frage bei der Implementierung nicht eigenständig geklärt werden kann.</li>
 </ul>
@@ -173,7 +173,7 @@ window.Quarto = {
 <section id="b-checking-the-preconditions" class="level2">
 <h2 class="anchored" data-anchor-id="b-checking-the-preconditions">(b) Checking the Preconditions</h2>
 <ul>
-<li>Die anonymisierten <a href="https://osf.io/yadqw">Primärdaten</a> konnten abgerufen und eingebunden werden:</li>
+<li>Die anonymisierten Primärdaten konnten erfolgreich abgerufen und eingebunden werden:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>original_data <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"../data/CleanData_S4_final.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -193,7 +193,8 @@ Windows 11 x64 (build 26200)</code></pre>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">

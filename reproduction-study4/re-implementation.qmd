@@ -13,7 +13,7 @@ format:
 editor: visual
 ---
 
-In dieser Datei wird eine vollständige Re-Implementation Reproduction von Studie 4 in Brotzeller & Gollwitzer (2025) nach den Schritten durchgeführt, die das *Conceptual Framework for Computational Reproductions* (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei findet sich in den [Zusatzmaterialien](https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git) der vorliegenden Bachelorarbeit.
+In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller & Gollwitzer (2025) nach den Schritten durchgeführt, die das *Conceptual-Framework-for-Computational-Reproductions* (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den [Zusatzmaterialien](https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git) der vorliegenden Bachelorarbeit.
 
 ## (a) Defining the Scope
 
@@ -21,21 +21,21 @@ In dieser Datei wird eine vollständige Re-Implementation Reproduction von Studi
 -   **Claims**:
     -   H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)
     -   H2 widerlegt: Die wahrgenommenen Verbesserungsmöglichkeiten ziehen keine Asymmetrien in den Selbstkonzeptänderungen nach sich (S. 1739)
--   **Results**: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren `size of discrepancy (SoD)`, `direction of discrepancy (DoD)` und `opportunity for improvement (OFI)` sowie all ihren Interaktionseffekten ab. Das Modell sagt die absoluten Selbstkonzeptänderungen vorher.
+-   **Results**: Tabelle 2 auf S. 1739. Diese Tabelle bildet alle Koeffizienten des Regressionsmodells mit den Prädiktoren `size of discrepancy (SoD)`, `direction of discrepancy (DoD)` und `opportunity for improvement (OFI)` sowie all ihren Interaktionen ab. Das Modell sagt die *absoluten* Selbstkonzeptänderungen vorher.
 -   **Obtained data**: Anonymisierte Primärdaten, die [hier](https://osf.io/yadqw) aus dem OSF abrufbar sind.
-    -   Die Primärdaten wurden schon so weit vorverarbeitet, dass Prädiktorvariablen des Regressionmodells bereits aus anderen Variablen im Datensatz berechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.
+    -   Die Primärdaten wurden schon insofern vorverarbeitet, als die Prädiktorvariablen des Regressionmodells bereits aus den Primärdaten im Datensatz errechnet wurden. Dieser Verarbeitungsschritt wird wiederholt.
     -   Der Datensatz enthält noch alle Versuchspersonen, die Brotzeller & Gollwitzer (2025) aus der finalen Analyse ausschließen. Die Anwendung der präregistrierten Ausschlusskriterien kann und wird deshalb wiederholt werden.
 -   **Involved descriptions**: Die Beschreibungen aus den folgenden Quellen werden miteinbezogen und auf etwaige Inkohärenzen überprüft:
     -   Beschreibungen der Hypothesen, der Methoden, des Vorgehens und der Ergebnisse von Studie 4 im Artikel (S. 1738-1739)
     -   Beschreibungen der Schlussfolgerungen aus den Ergebnissen von Studie 4 in der Diskussion (S. 1740)
     -   Beschreibungen der Hypothesen, der geplanten Berechnung sowie der Ausschlusskriterien in der [Präregistierung](https://aspredicted.org/rr4r7.pdf)
-    -   Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im Codebook
-    -   Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den Materialien zu Studie 4 zurückgegriffen werden
+    -   Beschreibungen der Berechnung der für die Regressionsanalyse benötigten Variablen im [Codebook](https://osf.io/yadqw)
+    -   Für die Formel zur Berechnung der Diskrepanz zwischen Feedback und Selbstwahrnehmung musste auf eine Beschreibung in den [Zusatzmaterialien zu Studie 4](https://osf.io/yadqw) zurückgegriffen werden
 -   **Inherited source code**: Der Quellcode für die Berechnung wird re-implementiert. Es wird nur dann auf Teile des [Quellcodes der Autoren](https://osf.io/yadqw) zurückgegriffen, wenn eine offene Frage bei der Implementierung nicht eigenständig geklärt werden kann.
 
 ## (b) Checking the Preconditions
 
--   Die anonymisierten [Primärdaten](https://osf.io/yadqw) konnten abgerufen und eingebunden werden:
+-   Die anonymisierten Primärdaten konnten erfolgreich abgerufen und eingebunden werden:
 
 ```{r}
 original_data <- read.csv2("../data/CleanData_S4_final.csv")
@@ -58,6 +58,7 @@ cat(paste0(comp_env$R.version$version.string, "\n", comp_env$platform, "\n", com
 
 library(dplyr)
 library(apaTables)
+library(effectsize)
 ```
 
 ```{r, package-versions}

@@ -46,6 +46,8 @@ data <- data %>% mutate(dod = case_when(
 
 # Exclusion where no discrepancy
 data <- data %>% filter(dod != "neither positive nor negative")
+n_final_sample <- nrow(data)
+n_final_sample
 
 # Exclusion where no self-concept change
 data <- data %>% filter(dsc != "neither positive nor negative")
@@ -55,3 +57,5 @@ data <- data %>% filter(dsc != "neither positive nor negative")
 # ********************************
 contradictors <- data %>% filter(dsc != dod)
 nrow(contradictors)
+
+round((nrow(contradictors) / n_final_sample) * 100, digits = 1)
