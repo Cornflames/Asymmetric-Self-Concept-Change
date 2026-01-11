@@ -6,7 +6,8 @@
 
 \usepackage[babel,german=quotes]{csquotes} 
 \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber,language=german]{biblatex}
-\addbibresource{report/references/bibliography.bib}
+% \addbibresource{report/references/bibliography.bib}
+\addbibresource{report/references/references-new.bib}
 \DeclareLanguageMapping{german}{german-apa}
 \usepackage{mathptmx}
 
@@ -17,7 +18,7 @@
 
 
 % Grafiken und Tabellen
-\usepackage{pdflscape}
+\usepackage{lscape}
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage{xltabular}
@@ -28,6 +29,7 @@
 \usepackage{longtable}
 % \UseTblrLibrary{booktabs}
 % Laden verschiedener Pakete für Querverweise
+\usepackage{enumitem}
 \usepackage{varioref}
 \usepackage{hyperref}
 \usepackage[ngerman]{cleveref}
@@ -40,14 +42,14 @@
 \usepackage[table]{xcolor}
 \newcommand{\td}{\textcolor{red}{\textbf{???}}{ }}
 
-\title{Asymmetric Self Concept Change} % The big, long version of the title for the title page
+\title{Untersuchung der theoretischen und methodischen Fundierung von \protect\textcite{brotzeller_exploring_2025} und ein Reproduktionsversuch} % The big, long version of the title for the title page
 \shorttitle{Asymmetric Self Concept Change} % The short title for the header
 \author{Benedikt Daniel Ehrenwirth}
 \duedate{13. Januar 2026}
 % \date{January 17, 2024} The student version doesn't use the \date command, for whatever reason
 \authorsaffiliations{Ludwig-Maximilians-Universität}
 \course{Bachelorarbeit} % LaTeX gets annoyed (i.e., throws a grumble-error) if this is blank, so I put something here. However, if your instructor will mark you off for this being on the title page, you can leave this entry blank (delete the PSY 4321, but leave the command), and just make peace with the error that will happen. It won't break the document.
-\professor{Dr. Professor}  % Same situation as for the course info. Some instructors want this, some absolutely don't and will take off points. So do what you gotta.
+\professor{Dr. Philipp Sckopke}  % Same situation as for the course info. Some instructors want this, some absolutely don't and will take off points. So do what you gotta.
 
 \abstract{This is the abstract for this paper, wherein the main points of the introduction, method, results, and discussion are quickly talked about. Probably in more than one sentence, though. Dare I guess, more than two? There is a page break before starting the Introduction.}
 
@@ -64,7 +66,7 @@
     \include{report/chapters/010 Einleitung}
     \include{report/chapters/020 Untersuchung der theoretischen Fundierung}
     \include{report/chapters/030 Reproduktion von Studie 4}
-    \include{report/chapters/040 Diskussion: Weitere Kritikpunkte und Anmerkungen}
+    \include{report/chapters/040 Diskussion Weitere Kritikpunkte und Anmerkungen}
     \include{report/chapters/050 Schlussbemerkungen}
 
     % Literaturverzeichnis
