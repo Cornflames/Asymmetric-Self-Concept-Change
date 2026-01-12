@@ -15,11 +15,11 @@ Explanation of the folder structure:
 (Kohrt et al., 2024) of study 4 from Brotzeller and Gollwitzer (2025). This file was
 pre-rendered to HTML and to PDF. It is recommended to chose the HTML-format for better
 readability.
-- `exploratory-analysis` contains an R script that explores how many participants in
+- `exploratory-analyses` contains an R script that explores how many participants in
 the final smaple from study 4 changed their self-concept into the opposite direction 
 than the discrepant feedback they received would have suggested (so-called contradictors).
 - `data` contains the anonymized data set from study 4. This data set can be found 
-[here](https://osf.io/yadqw/) in the OSF. For privacy reasons, the data set was added 
+[here](https://osf.io/yadqw/) in the OSF. For privacy reasons, the data set file was added 
 to the .gitignore file so that it will not be pushed to remote.
 - `report` contains all Latex and additional files that were used to compile the final
 paper.
