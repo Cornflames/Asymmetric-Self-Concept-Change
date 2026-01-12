@@ -13,11 +13,11 @@ format:
 editor: visual
 ---
 
-In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller & Gollwitzer (2025) nach den Schritten durchgeführt, die das *Conceptual-Framework-for-Computational-Reproductions* (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den [Zusatzmaterialien](https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git) der vorliegenden Bachelorarbeit.
+In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller und Gollwitzer (2025) nach den Schritten durchgeführt, die das *Conceptual-Framework-for-Computational-Reproductions* (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den [Zusatzmaterialien](https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git) der vorliegenden Bachelorarbeit.
 
 ## (a) Defining the Scope
 
--   **Works**: Studie 4 aus Brotzeller & Gollwitzer (2025)
+-   **Works**: Studie 4 aus Brotzeller und Gollwitzer (2025)
 -   **Claims**:
     -   H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)
     -   H2 widerlegt: Die wahrgenommenen Verbesserungsmöglichkeiten ziehen keine Asymmetrien in den Selbstkonzeptänderungen nach sich (S. 1739)
@@ -113,9 +113,9 @@ data_after_exclusion <- data_after_exclusion %>% filter(use_me == "yes")
 ```
 
 ::: callout-tip
-## Fazit: Auschluss von Versuchspersonen erfolgreich reproduziert
+## Fazit: Ausschluss von Versuchspersonen erfolgreich reproduziert
 
-Im Einklang mit der von Brotzeller & Gollwitzer (2025) berichten Anzahl, wurden n = `r nrow(original_data) - nrow(data_after_exclusion)` Personen von der Analyse ausgeschlossen.
+Im Einklang mit der von Brotzeller und Gollwitzer (2025) berichteten Anzahl, wurden n = `r nrow(original_data) - nrow(data_after_exclusion)` Personen von der Analyse ausgeschlossen.
 :::
 
 ### Data Pre-Processing
@@ -160,7 +160,7 @@ Im Codebook wird die Berechnung von `DoD` anders als im Artikel beschrieben. Die
 > "positive": (sc_t2-sc_t1) \> 0\
 :::
 
-Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading the Mind in the Eyes Test (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.
+Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading-the-Mind-in-the-Eyes-Tests (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.
 
 ```{r}
 # absolute discrepancy
@@ -186,7 +186,7 @@ data <- data %>% select(!discrepancy)
 ::: callout-important
 ## Obstacle 1: Berechnung der Größe der Diskrepanz ist unterspezifiziert
 
-Folgt man den Beschreibungen von Brotzeller & Gollwitzer (2025) bei der Berechnung von `SoD` und `DoD`, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.
+Folgt man den Beschreibungen von Brotzeller und Gollwitzer (2025) bei der Berechnung von `SoD` und `DoD`, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.
 
 Eine Inspektion des ursprünglichen Datensatzes hat ergeben, dass die Werte von `SoD` gerundet werden müssen, auch wenn das in keiner der Quellen Erwähnung findet. Auch die genaue Rundungsmethode wird nicht spezifiziert.
 
@@ -207,7 +207,7 @@ data <- data %>% mutate(
 ::: callout-tip
 ## Fazit: Erstellen der Variablen des Regressionsmodells erfolgreich reproduziert
 
-Nachdem Mistake 1 gelöst wurde und Obstacle 1 überwunden wurde, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:
+Nachdem Mistake 1 gelöst und Obstacle 1 überwunden wurden, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:
 
 ```{r}
 #| warning: false
@@ -285,7 +285,7 @@ summary(model_fit)
 
 ------------------------------------------------------------------------
 
-Es fällt auf, dass der `lm`-Befehl für die einzelnen Koeffizienten nicht die Effektstärken $sr^2$ (squared semi-partial correlations) berechnet. Da Brotzeller & Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.
+Es fällt auf, dass der `lm`-Befehl für die einzelnen Koeffizienten nicht die Effektstärken $sr^2$ (squared semi-partial correlations) berechnet. Da Brotzeller und Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.
 
 ::: callout-note
 ## Conflicting Choice 1: Mangelndes Wissen, um die Semipartialkorrelationen zu berechnen
@@ -306,5 +306,5 @@ apa.reg.table(model_fit)
 ::: callout-tip
 ## Fazit: Die berichteten Ergebnisse konnten reproduziert werden
 
-Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion **konsistente** Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar **numerisch identisch** zu den in Tabelle 2 (S. 1739) enthaltenen Werten sind.
+Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion **konsistente** Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar **numerisch identisch** zu den in Tabelle 2 (S. 1739) enthaltenen Werten.
 :::

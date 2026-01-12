@@ -143,11 +143,11 @@ window.Quarto = {
 </header>
 
 
-<p>In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller &amp; Gollwitzer (2025) nach den Schritten durchgeführt, die das <em>Conceptual-Framework-for-Computational-Reproductions</em> (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den <a href="https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git">Zusatzmaterialien</a> der vorliegenden Bachelorarbeit.</p>
+<p>In dieser Datei wird eine vollständige Re-Implementation-Reproduction von Studie 4 aus Brotzeller und Gollwitzer (2025) nach den Schritten durchgeführt, die das <em>Conceptual-Framework-for-Computational-Reproductions</em> (Kohrt et al., 2024) vorgibt. Eine besser lesbare HTML-Version dieser Datei befindet sich in den <a href="https://github.com/Cornflames/Asymmetric-Self-Concept-Change.git">Zusatzmaterialien</a> der vorliegenden Bachelorarbeit.</p>
 <section id="a-defining-the-scope" class="level2">
 <h2 class="anchored" data-anchor-id="a-defining-the-scope">(a) Defining the Scope</h2>
 <ul>
-<li><strong>Works</strong>: Studie 4 aus Brotzeller &amp; Gollwitzer (2025)</li>
+<li><strong>Works</strong>: Studie 4 aus Brotzeller und Gollwitzer (2025)</li>
 <li><strong>Claims</strong>:
 <ul>
 <li>H1 bestätigt: Größere Diskrepanzen zwischen Feedback und Selbstwahrnehmung ziehen größere Selbstkonzeptänderungen nach sich (S. 1739)</li>
@@ -259,11 +259,11 @@ regarding the discrepancy attention checks.</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Fazit: Auschluss von Versuchspersonen erfolgreich reproduziert
+Fazit: Ausschluss von Versuchspersonen erfolgreich reproduziert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Im Einklang mit der von Brotzeller &amp; Gollwitzer (2025) berichten Anzahl, wurden n = 89 Personen von der Analyse ausgeschlossen.</p>
+<p>Im Einklang mit der von Brotzeller und Gollwitzer (2025) berichteten Anzahl, wurden n = 89 Personen von der Analyse ausgeschlossen.</p>
 </div>
 </div>
 </section>
@@ -311,7 +311,7 @@ Mistake 1: Inkohärenz bezüglich der Berechnung der Richtung der Diskrepanz
 </blockquote>
 </div>
 </div>
-<p>Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading the Mind in the Eyes Test (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.</p>
+<p>Weil das Feedback als Prozentwert vorliegt, muss die Differenz ebenfalls zu einem Prozentwert umgerechnet werden. Dazu müssen die Selbstwahrnehmungswerte von der ursprünglichen Skala von 1-9 auf die Skala 0-8 umgerechnet werden, die einen Nullpunkt hat. Das Feedback errechnet sich als prozentualer Gesamtwert aus den einzelnen Items des Reading-the-Mind-in-the-Eyes-Tests (Bölte, 2005); diese Berechnung wird nicht noch einmal wiederholt, sondern von den Autoren übernommen.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># absolute discrepancy</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
@@ -342,7 +342,7 @@ Obstacle 1: Berechnung der Größe der Diskrepanz ist unterspezifiziert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Folgt man den Beschreibungen von Brotzeller &amp; Gollwitzer (2025) bei der Berechnung von <code>SoD</code> und <code>DoD</code>, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.</p>
+<p>Folgt man den Beschreibungen von Brotzeller und Gollwitzer (2025) bei der Berechnung von <code>SoD</code> und <code>DoD</code>, stimmen die Werte nicht mit jenen überein, die die Autoren in ihrem Datensatz berechnet haben.</p>
 <p>Eine Inspektion des ursprünglichen Datensatzes hat ergeben, dass die Werte von <code>SoD</code> gerundet werden müssen, auch wenn das in keiner der Quellen Erwähnung findet. Auch die genaue Rundungsmethode wird nicht spezifiziert.</p>
 <p>Erst nach einigen Fehlversuchen konnte die richtige Rundungsmethode identifiziert werden. Sie entspricht der klassischen Rundungsmethode, d.h. Werte unter .5 werden abgerundet, Werte darüber hingegen aufgerundet. Weil R keine Standardfunktion für diese Rundungsmethode implementiert, musste sie eigens definiert werden.</p>
 </div>
@@ -367,7 +367,7 @@ Fazit: Erstellen der Variablen des Regressionsmodells erfolgreich reproduziert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nachdem Mistake 1 gelöst wurde und Obstacle 1 überwunden wurde, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:</p>
+<p>Nachdem Mistake 1 gelöst und Obstacle 1 überwunden wurden, stimmen die Werte der neu berechneten Variablen mit den ursprünglichen Daten überein:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>matches <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(data_after_exclusion)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -450,7 +450,7 @@ F-statistic: 13.36 on 7 and 445 DF,  p-value: 1.12e-15</code></pre>
 </div>
 </div>
 <hr>
-<p>Es fällt auf, dass der <code>lm</code>-Befehl für die einzelnen Koeffizienten nicht die Effektstärken <span class="math inline">\(sr^2\)</span> (squared semi-partial correlations) berechnet. Da Brotzeller &amp; Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.</p>
+<p>Es fällt auf, dass der <code>lm</code>-Befehl für die einzelnen Koeffizienten nicht die Effektstärken <span class="math inline">\(sr^2\)</span> (squared semi-partial correlations) berechnet. Da Brotzeller und Gollwitzer (2025) diese Effektstärken angeben, müssen sie nachträglich berechnet werden.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -521,7 +521,7 @@ Fazit: Die berichteten Ergebnisse konnten reproduziert werden
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion <strong>konsistente</strong> Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar <strong>numerisch identisch</strong> zu den in Tabelle 2 (S. 1739) enthaltenen Werten sind.</p>
+<p>Ein maueller Vergleich der neuberechneten mit den berichteten Ergebnissen zeigt, dass die Reproduktion <strong>konsistente</strong> Ergebnisse hervorgebracht hat. Rundet man die neuberechneten Werte auf zwei Nachkommastellen, sind sie sogar <strong>numerisch identisch</strong> zu den in Tabelle 2 (S. 1739) enthaltenen Werten.</p>
 </div>
 </div>
 </section>
