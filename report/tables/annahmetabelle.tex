@@ -22,7 +22,7 @@
     % --- Tabellenfuß (letzte Seite) ---
     \bottomrule
     \multicolumn{6}{p{\linewidth}}{%
-        \footnotesize \textit{Hinweis.} Alle Zitate stammen aus \textcite{brotzeller_exploring_2025}. Aus den jeweiligen Zitaten werden die einzelnen Aussagen bzw. Annahmen extrahiert, die sie beinhalten. Die Annahmen 1--18 betreffen die Definitionen von Phänomenen und Variablen, die im verwendeten Untersuchungsparadigma auftreten können bzw. eine Rolle spielen, die Annahmen 19--45 hingegen die Annahmen der von den Autoren dargestellten Theorie. Zur Vorbereitung auf die Erstellung von VAST"=Displays wird jede Annahme als Beziehung zwischen gewissen Konzepten ausgedrückt. Jeder Annahme werden die sie konstituierenden Konzepte zugeordnet. Ein Konzept kann dabei in beliebig vielen Annahmen vorkommen. Ein Higher"=Order"=Concept (HOC) umschließt die darauffolgenden Konzepte.
+        \footnotesize \textit{Hinweis.} Alle Zitate stammen aus \textcite{brotzeller_exploring_2025}. Aus jedem Zitat wurden die einzelnen Annahmen extrahiert, die sie enthält. Die Annahmen 1--18 betreffen Definitionen von Phänomenen und Variablen, die Annahmen 19--45 hingegen die Annahmen der von den Autoren dargestellten Theorie. Jeder Annahme werden die Konzepte zugeordnet, die sie in Beziehung setzt. Ein Higher"=Order"=Concept (HOC) umschließt die darauffolgenden Konzepte. Legende Rel.: n = Naming, i = Conceptual Implication, c = Causation, p = Prediction
     } \\
     \endlastfoot
 
@@ -83,7 +83,7 @@
          & Negativity bias in self"=concept change
          & n & NEGATIVITY BIAS & \hypertarget{id12}{12} \\
     \midrule
-    1732 & 1732	While we are mainly interested in the main effects of size and direction of discrepancy separately, we also explore whether they interact in producing self-concept change. Prior studies have largely neglected the possible interaction effects of these variables. & The size and direction of discrepancy might interact in producing self-concept change & p & SIZE OF DISCREPANCY, DIRECTION OF DISCREPANCY,
+    1732 & 1732	While we are mainly interested in the main effects of size and direction of discrepancy separately, we also explore whether they interact in producing self-concept change. Prior studies have largely neglected the possible interaction effects of these variables. & The size and direction of discrepancy might interact in producing self-concept change & p ? & SIZE OF DISCREPANCY, DIRECTION OF DISCREPANCY,
 SELF"=CONCEPT CHANGE & \hypertarget{id13}{13} \\\\
     \midrule
 
@@ -101,7 +101,7 @@ SELF"=CONCEPT CHANGE & \hypertarget{id13}{13} \\\\
          & n & SELF-PERCEPTION & \hypertarget{id16}{16} \\
     \addlinespace
          & 
-         & Self-concept change has occurred when self-perception_{t1} differs from self-perception_{t2} 
+         & Self-concept change has occurred when $\mathrm{self-perception}_{\mathrm{t1}}$ differs from $\mathrm{self-perception}_{\mathrm{t2}}$
          & i & SELF-PERCEPTION, DIFFERENCE IN SELF-PERCEPTIONS, SELF-CONCEPT CHANGE & \hypertarget{id17}{17} \\
     \midrule
 
@@ -168,7 +168,7 @@ SELF"=CONCEPT CHANGE & \hypertarget{id13}{13} \\\\
     \addlinespace
          & 
          & If a person is motivated to self-improve, negative discrepant feedback is more informative than positive 
-         & i & SELF-IMPROVEMENT MOTIVE, HOC: PERCEPTION OF FEEDBACK, INFORMATIONAL VALUE OF NEGATIVE FEEDBACK & \hypertarget{id32}{32} \\
+         & i & SELF-IMPROVEMENT MOTIVE, HOC: PERCEPTION OF FEEDBACK, INFORMATIONAL VALUE OF [NEGATIVE|POSITIVE] FEEDBACK & \hypertarget{id32}{32} \\
     \addlinespace
          & 
          & The perception that negative feedback is more informative (for improvement) under a self-improvement motive should lead to a negativity bias in self-concept change
@@ -176,11 +176,13 @@ SELF"=CONCEPT CHANGE & \hypertarget{id13}{13} \\\\
     \midrule
 
     1733 & \multirow{3}{=}{
-    % While self-improvement is triggered in particular when a person perceives that they can overcome is-ought discrepancies (e.g., by practicing or rehearsing), 
+    While self-improvement is triggered in particular when a person perceives that they can overcome is-ought discrepancies (e.g., by practicing or rehearsing), 
     self-enhancement should be triggered when a person perceives it as impossible to improve on the self-concept aspect in question (Müller-Pinzler et al., 2019). 
     When the aspect of the self-concept is perceived as fixed and unimprovable, negative feedback does not have an informational value toward improving oneself [\dots].
-    % , but is, instead, particularly threatening to one’s positive self-view (Dunning, 1995; Dweck et al., 1995; Levy \& Dweck, 1998). 
-    In such cases, the only possibility of maintaining one’s positive self-view is to self-enhance. Perceiving little opportunity for improvement should therefore trigger self-enhancement and produce positively biased self-concept change.}
+    but is, instead, particularly threatening to one’s positive self-view (Dunning, 1995; Dweck et al., 1995; Levy \& Dweck, 1998). 
+    In such cases, the only possibility of maintaining one’s positive 
+    % self-view is to self-enhance. Perceiving little opportunity for improvement should therefore trigger self-enhancement and produce positively biased self-concept change.
+    }
          & Perceived possibility to improve on the self-concept aspect in question 
          & n & OPPORTUNITY FOR IMPROVEMENT & \hypertarget{id34}{34} \\
     \addlinespace
@@ -190,9 +192,12 @@ SELF"=CONCEPT CHANGE & \hypertarget{id13}{13} \\\\
     \addlinespace
          & 
          & If people perceive it as impossible to improve, negative feedback has no informational value 
-         & i -1 & OPPORTUNITY FOR IMPROVEMENT, INFORMATIONAL VALUE OF NEGATIVE FEEDBACK & \hypertarget{id36}{36} \\
+         & i -1 & OPPORTUNITY FOR IMPROVEMENT, INFORMATIONAL VALUE OF NEGATIVE FEEDBACK & \hypertarget{id36}{36} \\\\
+         
     \addlinespace
-         & 
+         & \multirow{2}{=}{
+         self-view is to self-enhance. Perceiving little opportunity for improvement should therefore trigger self-enhancement and produce positively biased self-concept change.
+         }
          & If people perceive it as impossible to improve, negative feedback is particularly threatening to one’s self-view 
          & i & OPPORTUNITY FOR IMPROVEMENT, THREAD BY NEGATIVE FEEDBACK & \hypertarget{id37}{37} \\
     \addlinespace

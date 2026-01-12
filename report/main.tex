@@ -1,4 +1,4 @@
-\documentclass[stu,12pt,floatsintext]{apa7}
+\documentclass[stu,12pt,floatsintext,longtable]{apa7}
 
 \usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
@@ -26,7 +26,8 @@
 \usepackage{ragged2e}
 \usepackage{multicol}
 \usepackage{multirow}
-\usepackage{longtable}
+% \usepackage{longtable}
+\usepackage{pdfpages}
 % \UseTblrLibrary{booktabs}
 % Laden verschiedener Pakete für Querverweise
 \usepackage{enumitem}
@@ -44,14 +45,23 @@
 
 \title{Untersuchung der theoretischen und methodischen Fundierung von \protect\textcite{brotzeller_exploring_2025} und ein Reproduktionsversuch} % The big, long version of the title for the title page
 \shorttitle{Asymmetric Self Concept Change} % The short title for the header
-\author{Benedikt Daniel Ehrenwirth}
+\authorsnames{Benedikt Daniel Ehrenwirth\\Matrikelnummer: }
+\note{Zeichenzahl: \td}
 \duedate{13. Januar 2026}
 % \date{January 17, 2024} The student version doesn't use the \date command, for whatever reason
 \authorsaffiliations{Ludwig-Maximilians-Universität}
 \course{Bachelorarbeit} % LaTeX gets annoyed (i.e., throws a grumble-error) if this is blank, so I put something here. However, if your instructor will mark you off for this being on the title page, you can leave this entry blank (delete the PSY 4321, but leave the command), and just make peace with the error that will happen. It won't break the document.
 \professor{Dr. Philipp Sckopke}  % Same situation as for the course info. Some instructors want this, some absolutely don't and will take off points. So do what you gotta.
 
-\abstract{This is the abstract for this paper, wherein the main points of the introduction, method, results, and discussion are quickly talked about. Probably in more than one sentence, though. Dare I guess, more than two? There is a page break before starting the Introduction.}
+\abstract{
+Die Replikationskrise in der Psychologie macht die Entwicklung besserer Theorien erforderlich. Nur wenn eine Theorie präzise und kohärent ist, lassen sich aus ihr exakte Vorhersagen ableiten. Ausschließlich verbal beschriebene Theorien können den Präzisions- und Kohärenzanspruch in der Regel nicht erfüllen und müssen um eine Formalisierung ergänzt werden. Neben der besseren Ableitbarkeit von Vorhersagen dient die Formalisierung dazu, beurteilen zu können, ob eine Theorie das vorhergesagte Phänomen auch plausibel erklären kann. Die vorliegende Arbeit versucht am Beispiel der Überprüfung der Theorie von \textcite{brotzeller_exploring_2025} aufzuzeigen, dass die Güte einer Theorie nur durch eine Kombination aus der Beurteilung ihrer Vorhersage- und ihrer Erklärungskraft bewertet werden kann.
+
+Die theoretischen Annahmen werden formalisiert und dabei auf ihre Präzision und Kohärenz geprüft. Im Rahmen einer Re-Implementation-Reproduction \autocite{kohrt_conceptual_2024} wird versucht, die Ergebnisse zu reproduzieren, mit denen die Autoren auf eine geringe Vorhersagekraft der Theorie schließen.
+
+Nach der Definition des Productive-Explanation-Framework \autocite{van_dongen_productive_2025} weist die Theorie eine geringe Erklärungskraft auf. Die Ergebnisse sind reproduzierbar, was die Schlussfolgerung auf eine geringe Vorhersagekraft der Theorie unterstützt. Allerdings kann nicht ausgeschlossen werden, dass die getroffene Vorhersage eine notwendige Folge der Theorie ist, weshalb die Schlussfolgerung zu keinem abschließenden Urteil kommen kann.
+
+Die Formalisierung von Theorien fördert die Entwicklung besserer Theorien, indem sie die Beurteilung ihrer Erklärungskraft ermöglicht und der Überprüfung ihre Vorhersagekraft zu einer höheren Aussagekraft verhilft.
+}
 
 \begin{document}
     \maketitle
@@ -75,4 +85,6 @@
     \appendix
 
     \include{report/appendices/annahmetabelle}
+    \include{report/appendices/appendix_b}
+    \include{report/appendices/erklaerung}
 \end{document}
